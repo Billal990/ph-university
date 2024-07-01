@@ -65,6 +65,9 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     required: true,
     unique:true,
   },
+  password:{
+    type:String
+  },
   age: {
     type: Number,
     required: [true, 'Age is required'],
@@ -111,6 +114,10 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     type:Schema.Types.ObjectId,
     required:true,
     ref:'AcademicDepartment'
+  },
+  profileImage:{
+    type:String,
+    required:true,
   },
   isDeleted:{
     type:Boolean,

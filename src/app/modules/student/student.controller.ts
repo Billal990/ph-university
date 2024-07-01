@@ -2,6 +2,7 @@ import { studentServices } from './student.service';
 import { catchAsync } from '../../utils/catchAsync';
 
 const getAllStudents = catchAsync(async (req, res) => {
+  console.log('Cookie =======> ', req.cookies)
   const result = await studentServices.getAllStudentsFromDB(req.query);
   res.status(200).json({
     success: true,

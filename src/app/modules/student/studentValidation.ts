@@ -29,6 +29,7 @@ const guardianValidationSchema = z.object({
  const studentCreateValidationSchema = z.object({
   name: studentNameValidationSchema,
   email:z.string().email(),
+  password:z.string().optional(),
   age: z.number().min(18).max(30),
   contactNo: z.string(),
   dob: z.string().optional(),

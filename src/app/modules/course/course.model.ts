@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { TCourse, TPrerequisiteCourse } from "./course.interface";
+import { TCourse, TCourseFaculty, TPrerequisiteCourse } from "./course.interface";
 
 const prerequisiteCourseSchema = new Schema<TPrerequisiteCourse>({
     course:{
@@ -39,6 +39,23 @@ const courseSchema = new Schema<TCourse>({
     },
     prerequisiteCourses:[prerequisiteCourseSchema]
 })
+
+
+const courseFacultySchema = new Schema<TCourseFaculty>({
+    course:{
+        type:Schema.Types.ObjectId,
+        ref:'Course',
+        unique:true,
+        required:true
+    },
+    faculties:[{
+        type:Schema.Types.ObjectId,
+        ref:'Faculty',
+        required:true
+    }]
+})
+
+export const CourseFaculty = model<TCourseFaculty>('CourseFaculty', courseFacultySchema)
 
 courseSchema.pre('find', async function(next){
     this.find({isDeleted:{$ne:true}})

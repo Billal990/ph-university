@@ -10,6 +10,7 @@ import { studentSearchableFields } from './student.constant';
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   
   const studentQuery = new QueryBuilder(Student.find()
+  .populate('userId')
   .populate('admissionSemester')
   .populate({
     path:'admissionDepartment',

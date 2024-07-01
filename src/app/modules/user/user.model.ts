@@ -2,7 +2,6 @@ import { Schema, model } from "mongoose";
 import { TUser, UserModel } from "./user.interface";
 import bcrypt from "bcrypt";
 import config from '../../config';
-import { Student } from "../student/student.model";
 
 const userSchema = new Schema<TUser, UserModel>({
     id:{
@@ -10,13 +9,22 @@ const userSchema = new Schema<TUser, UserModel>({
         required:true,
         unique:true,
     },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+    },
     password:{
         type:String,
-        required:true
+        required:true,
+        select:0
     },
     needsPasswordChange:{
         type:Boolean,
         default:true
+    },
+    passwordChangedAt:{
+        type:Date,
     },
     role:{
         type:String,
@@ -34,11 +42,15 @@ const userSchema = new Schema<TUser, UserModel>({
     },
 }, {timestamps:true});
 
+
 //Static Method
-userSchema.static('isExistUser', async function(email:string) {
-   const existingUser = await Student.findOne({email});
-   return existingUser;
-});
+userSchema.statics.isExistsUser = async function(id:string){
+   return await User.findOne({id}).select('password email role status needsPasswordChange id isDeleted passwordChangedAt')
+}
+
+userSchema.statics.isPasswordMatched = async function(plainPassword:string, hashedPassword:string){
+   return await bcrypt.compare(plainPassword, hashedPassword)
+}
 
 userSchema.pre('save', function(next){
     const pwd = this.password || config.default_password as string;

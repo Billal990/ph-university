@@ -41,6 +41,7 @@ export type TStudent = {
   id:string;
   userId:Types.ObjectId;
   email:string;
+  password?:string;
   age: number;
   contactNo: string;
   dob?: string;
@@ -51,6 +52,7 @@ export type TStudent = {
   guardian: TStudentGuardian;
   admissionSemester:Types.ObjectId;
   admissionDepartment:Types.ObjectId;
+  profileImage:string;
   isDeleted:boolean;
 };
 

@@ -5,3 +5,7 @@ export const userValidationSchema = z.object({
     .max(15, {message:'Password can not be more than 15 characters!'})
     .optional()
 })
+
+export const userStatusValidationSchema = z.object({
+    status:z.string()
+})
